@@ -16,7 +16,7 @@
     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex items-center justify-between border-l-4 border-l-green-500">
       <div>
         <h1 class="text-2xl font-bold text-gray-900 flex items-center gap-2">
-          <!-- SVG 圖示 (無須載入第三方圖示庫，確保 0 延遲且不卡關) -->
+          <!-- SVG 圖示 -->
           <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600" viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
           Divi 「文字模組」專用防彈表格生成器 (GitHub Pages 穩定版)
         </h1>
@@ -46,10 +46,18 @@
 
         <!-- 2. 顏色與樣式設定 -->
         <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
-          <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-500" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
-            2. 快速樣式調校
-          </h2>
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold flex items-center gap-2">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-500" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
+              2. 快速樣式調校
+            </h2>
+            <button 
+              id="resetBtn" 
+              class="text-xs text-green-600 hover:text-green-800 font-medium border border-green-200 px-2 py-1 rounded bg-green-50 hover:bg-green-100 transition-colors"
+            >
+              重設為品牌色
+            </button>
+          </div>
           
           <div class="space-y-4">
             <!-- 抬頭背景色與文字色 -->
@@ -57,15 +65,15 @@
               <div>
                 <label class="block text-xs font-medium text-gray-700 mb-1">抬頭背景色</label>
                 <div class="flex h-10 border border-gray-300 rounded-lg overflow-hidden">
-                  <input type="color" id="headerBgPicker" value="#4a658a" class="w-12 h-full p-0 border-0 cursor-pointer" />
-                  <input type="text" id="headerBgText" value="#4a658a" class="flex-1 px-2 text-sm uppercase outline-none" />
+                  <input type="color" id="headerBgPicker" value="#4A658A" class="w-12 h-full p-0 border-0 cursor-pointer" />
+                  <input type="text" id="headerBgText" value="#4A658A" class="flex-1 px-2 text-sm uppercase outline-none" />
                 </div>
               </div>
               <div>
                 <label class="block text-xs font-medium text-gray-700 mb-1">抬頭文字色</label>
                 <div class="flex h-10 border border-gray-300 rounded-lg overflow-hidden">
-                  <input type="color" id="headerTextPicker" value="#ffffff" class="w-12 h-full p-0 border-0 cursor-pointer" />
-                  <input type="text" id="headerTextText" value="#ffffff" class="flex-1 px-2 text-sm uppercase outline-none" />
+                  <input type="color" id="headerTextPicker" value="#FFFFFF" class="w-12 h-full p-0 border-0 cursor-pointer" />
+                  <input type="text" id="headerTextText" value="#FFFFFF" class="flex-1 px-2 text-sm uppercase outline-none" />
                 </div>
               </div>
             </div>
@@ -75,15 +83,15 @@
               <div>
                 <label class="block text-xs font-medium text-gray-700 mb-1">單數行背景</label>
                 <div class="flex h-10 border border-gray-300 rounded-lg overflow-hidden">
-                  <input type="color" id="rowOddBgPicker" value="#ffffff" class="w-12 h-full p-0 border-0 cursor-pointer" />
-                  <input type="text" id="rowOddBgText" value="#ffffff" class="flex-1 px-2 text-sm uppercase outline-none" />
+                  <input type="color" id="rowOddBgPicker" value="#FFFFFF" class="w-12 h-full p-0 border-0 cursor-pointer" />
+                  <input type="text" id="rowOddBgText" value="#FFFFFF" class="flex-1 px-2 text-sm uppercase outline-none" />
                 </div>
               </div>
               <div>
                 <label class="block text-xs font-medium text-gray-700 mb-1">雙數行背景</label>
                 <div class="flex h-10 border border-gray-300 rounded-lg overflow-hidden">
-                  <input type="color" id="rowEvenBgPicker" value="#eef4fa" class="w-12 h-full p-0 border-0 cursor-pointer" />
-                  <input type="text" id="rowEvenBgText" value="#eef4fa" class="flex-1 px-2 text-sm uppercase outline-none" />
+                  <input type="color" id="rowEvenBgPicker" value="#EEF4FA" class="w-12 h-full p-0 border-0 cursor-pointer" />
+                  <input type="text" id="rowEvenBgText" value="#EEF4FA" class="flex-1 px-2 text-sm uppercase outline-none" />
                 </div>
               </div>
             </div>
@@ -100,13 +108,12 @@
               <div>
                 <label class="block text-xs font-medium text-gray-700 mb-1">邊框顏色</label>
                 <div class="flex h-10 border border-gray-300 rounded-lg overflow-hidden">
-                  <input type="color" id="borderColorPicker" value="#4a658a" class="w-12 h-full p-0 border-0 cursor-pointer" />
-                  <input type="text" id="borderColorText" value="#4a658a" class="flex-1 px-2 text-sm uppercase outline-none" />
+                  <input type="color" id="borderColorPicker" value="#4A658A" class="w-12 h-full p-0 border-0 cursor-pointer" />
+                  <input type="text" id="borderColorText" value="#4A658A" class="flex-1 px-2 text-sm uppercase outline-none" />
                 </div>
               </div>
             </div>
 
-    
             <!-- 對齊方式與字型大小 -->
             <div class="grid grid-cols-2 gap-4">
               <div>
@@ -124,6 +131,33 @@
                   <option value="16px">16px</option>
                   <option value="18px">18px</option>
                 </select>
+              </div>
+            </div>
+
+            <!-- 高亮重點背景與文字色 (含開關) -->
+            <div class="col-span-2 border-t border-gray-200 pt-4 mt-2">
+              <div class="flex items-center justify-between mb-3">
+                <label class="text-sm font-semibold text-gray-800 flex items-center gap-2 cursor-pointer select-none">
+                  <input type="checkbox" id="enableHighlight" checked class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500 cursor-pointer">
+                  啟用重點區塊 (Highlight) 樣式
+                </label>
+              </div>
+              
+              <div id="highlightColorGroup" class="grid grid-cols-2 gap-4 transition-opacity duration-200">
+                <div>
+                  <label class="block text-xs font-medium text-gray-700 mb-1">重點背景 (Highlight)</label>
+                  <div class="flex h-10 border border-gray-300 rounded-lg overflow-hidden">
+                    <input type="color" id="highlightBgPicker" value="#FDF4EC" class="w-12 h-full p-0 border-0 cursor-pointer" />
+                    <input type="text" id="highlightBgText" value="#FDF4EC" class="flex-1 px-2 text-sm uppercase outline-none" />
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-gray-700 mb-1">重點文字 (Highlight)</label>
+                  <div class="flex h-10 border border-gray-300 rounded-lg overflow-hidden">
+                    <input type="color" id="highlightTextPicker" value="#D35400" class="w-12 h-full p-0 border-0 cursor-pointer" />
+                    <input type="text" id="highlightTextText" value="#D35400" class="flex-1 px-2 text-sm uppercase outline-none" />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -173,95 +207,170 @@
     const defaultHtml = `<table class="compare-table">
 <thead>
 <tr>
-<th>項目</th>
-<th>項目</th>
-<th>項目</th>
+<th>時間</th>
+<th>議程</th>
+<th>講者</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>13:30-14:00</td>
-<td>內容標題</td>
+<td>報到入場</td>
 <td>-</td>
 </tr>
 <tr>
 <td>14:00-14:15</td>
-<td>內容標題</td>
-<td>內容標題</td>
+<td>暖場簡介・飛騰雲端</td>
+<td>飛騰雲端業務協理<br>許正瑋 David</td>
 </tr>
 <tr>
 <td>14:15-15:00</td>
-<td>內容標題</td>
-<td>內容標題</td>
+<td>職場霸凌、性騷擾案例解析與企業合規指南 (上)</td>
+<td>宇恒法律事務所所長<br>沈以軒律師</td>
 </tr>
 <tr>
 <td>15:00-15:20</td>
-<td>內容標題</td>
+<td>中場休息</td>
 <td>-</td>
 </tr>
 <tr>
+<td class="highlight-cell">15:20-15:40</td>
+<td class="highlight-cell">案例分享</td>
+<td class="highlight-cell"></td>
+</tr>
+<tr>
 <td>15:40-16:40</td>
-<td>內容標題</td>
-<td>內容標題</td>
+<td>職場霸凌、性騷擾案例解析與企業合規指南 (下)</td>
+<td>宇恒法律事務所所長<br>沈以軒律師</td>
 </tr>
 </tbody>
 </table>`;
 
-    // 初始化輸入框的值
-    document.getElementById('inputHtml').value = defaultHtml;
+    // 預設色彩設定組 (方便重設)
+    const defaultBrandColors = {
+      headerBg: '#4A658A',
+      headerText: '#FFFFFF',
+      rowOddBg: '#FFFFFF',
+      rowEvenBg: '#EEF4FA',
+      bodyText: '#333333',
+      borderColor: '#4A658A',
+      highlightBg: '#FDF4EC',
+      highlightText: '#D35400'
+    };
+
+    // 防禦性 DOM 取得
+    const getEl = (id) => document.getElementById(id);
+
+    const inputHtmlEl = getEl('inputHtml');
+    if (inputHtmlEl) inputHtmlEl.value = defaultHtml;
 
     // 雙向綁定色彩選擇器與文字框
     const colorBinds = [
-      { picker: 'headerBgPicker', text: 'headerBgText' },
-      { picker: 'headerTextPicker', text: 'headerTextText' },
-      { picker: 'rowOddBgPicker', text: 'rowOddBgText' },
-      { picker: 'rowEvenBgPicker', text: 'rowEvenBgText' },
-      { picker: 'bodyTextPicker', text: 'bodyTextText' },
-      { picker: 'borderColorPicker', text: 'borderColorText' },
-      { picker: 'highlightBgPicker', text: 'highlightBgText' },
-      { picker: 'highlightTextPicker', text: 'highlightTextText' }
+      { picker: 'headerBgPicker', text: 'headerBgText', key: 'headerBg' },
+      { picker: 'headerTextPicker', text: 'headerTextText', key: 'headerText' },
+      { picker: 'rowOddBgPicker', text: 'rowOddBgText', key: 'rowOddBg' },
+      { picker: 'rowEvenBgPicker', text: 'rowEvenBgText', key: 'rowEvenBg' },
+      { picker: 'bodyTextPicker', text: 'bodyTextText', key: 'bodyText' },
+      { picker: 'borderColorPicker', text: 'borderColorText', key: 'borderColor' },
+      { picker: 'highlightBgPicker', text: 'highlightBgText', key: 'highlightBg' },
+      { picker: 'highlightTextPicker', text: 'highlightTextText', key: 'highlightText' }
     ];
 
     colorBinds.forEach(bind => {
-      const pEl = document.getElementById(bind.picker);
-      const tEl = document.getElementById(bind.text);
+      const pEl = getEl(bind.picker);
+      const tEl = getEl(bind.text);
 
-      pEl.addEventListener('input', (e) => {
-        tEl.value = e.target.value.toUpperCase();
-        generateTable();
-      });
-
-      tEl.addEventListener('input', (e) => {
-        let val = e.target.value;
-        if (val.startsWith('#') && val.length === 7) {
-          pEl.value = val;
+      if (pEl && tEl) {
+        // 當色彩盤變動，同步更新文字框
+        pEl.addEventListener('input', (e) => {
+          tEl.value = e.target.value.toUpperCase();
           generateTable();
-        }
-      });
+        });
+
+        // 當文字框變動，檢驗並同步更新色彩盤 (含自動防呆補 #)
+        tEl.addEventListener('input', (e) => {
+          let val = e.target.value.trim();
+          
+          if (val.length > 0 && !val.startsWith('#')) {
+            val = '#' + val;
+            tEl.value = val;
+          }
+          
+          if (val.startsWith('#') && val.length === 7) {
+            pEl.value = val;
+            generateTable();
+          }
+        });
+      }
     });
 
+    // 綁定重設品牌色按鈕
+    const resetBtn = getEl('resetBtn');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        colorBinds.forEach(bind => {
+          const pEl = getEl(bind.picker);
+          const tEl = getEl(bind.text);
+          const defaultVal = defaultBrandColors[bind.key];
+          if (pEl && tEl && defaultVal) {
+            pEl.value = defaultVal;
+            tEl.value = defaultVal;
+          }
+        });
+        generateTable();
+      });
+    }
+
     // 綁定其餘表單更新事件
-    document.getElementById('inputHtml').addEventListener('input', generateTable);
-    document.getElementById('textAlign').addEventListener('change', generateTable);
-    document.getElementById('fontSize').addEventListener('change', generateTable);
+    const textAl = getEl('textAlign');
+    const fontSz = getEl('fontSize');
+    const enableHighlightEl = getEl('enableHighlight');
+    
+    if (inputHtmlEl) inputHtmlEl.addEventListener('input', generateTable);
+    if (textAl) textAl.addEventListener('change', generateTable);
+    if (fontSz) fontSz.addEventListener('change', generateTable);
+    
+    // 重點開關邏輯與視覺防呆
+    if (enableHighlightEl) {
+      enableHighlightEl.addEventListener('change', (e) => {
+        const group = getEl('highlightColorGroup');
+        if (group) {
+          if (e.target.checked) {
+            group.classList.remove('opacity-40', 'pointer-events-none', 'grayscale');
+          } else {
+            group.classList.add('opacity-40', 'pointer-events-none', 'grayscale');
+          }
+        }
+        generateTable();
+      });
+    }
 
     // 生成表格核心邏輯
     function generateTable() {
-      const inputHtml = document.getElementById('inputHtml').value.trim();
-      const headerBg = document.getElementById('headerBgText').value;
-      const headerText = document.getElementById('headerTextText').value;
-      const rowOddBg = document.getElementById('rowOddBgText').value;
-      const rowEvenBg = document.getElementById('rowEvenBgText').value;
-      const bodyText = document.getElementById('bodyTextText').value;
-      const borderColor = document.getElementById('borderColorText').value;
-      const highlightBg = document.getElementById('highlightBgText').value;
-      const highlightText = document.getElementById('highlightTextText').value;
-      const textAlign = document.getElementById('textAlign').value;
-      const fontSize = document.getElementById('fontSize').value;
+      const inputHtmlEl = getEl('inputHtml');
+      if (!inputHtmlEl) return;
+      const inputHtml = inputHtmlEl.value.trim();
+      
+      const headerBg = getEl('headerBgText')?.value || '#4A658A';
+      const headerText = getEl('headerTextText')?.value || '#FFFFFF';
+      const rowOddBg = getEl('rowOddBgText')?.value || '#FFFFFF';
+      const rowEvenBg = getEl('rowEvenBgText')?.value || '#EEF4FA';
+      const bodyText = getEl('bodyTextText')?.value || '#333333';
+      const borderColor = getEl('borderColorText')?.value || '#4A658A';
+      const highlightBg = getEl('highlightBgText')?.value || '#FDF4EC';
+      const highlightText = getEl('highlightTextText')?.value || '#D35400';
+      const textAlign = getEl('textAlign')?.value || 'center';
+      const fontSize = getEl('fontSize')?.value || '15px';
+      
+      // 取得是否啟用 Highlight
+      const enableHighlight = getEl('enableHighlight')?.checked ?? true;
+
+      const previewCont = getEl('previewContainer');
+      const outCode = getEl('outputCode');
 
       if (!inputHtml) {
-        document.getElementById('previewContainer').innerHTML = '<p class="text-gray-400 text-center">等待輸入 HTML 語法...</p>';
-        document.getElementById('outputCode').textContent = '';
+        if (previewCont) previewCont.innerHTML = '<p class="text-gray-400 text-center">等待輸入 HTML 語法...</p>';
+        if (outCode) outCode.textContent = '';
         return;
       }
 
@@ -271,8 +380,8 @@
         const table = doc.querySelector('table');
 
         if (!table) {
-          document.getElementById('previewContainer').innerHTML = '<p class="text-red-500 text-center">找不到 &lt;table&gt; 標籤，請確認格式是否正確</p>';
-          document.getElementById('outputCode').textContent = '';
+          if (previewCont) previewCont.innerHTML = '<p class="text-red-500 text-center">找不到 &lt;table&gt; 標籤，請確認格式是否正確</p>';
+          if (outCode) outCode.textContent = '';
           return;
         }
 
@@ -287,18 +396,27 @@
         });
 
         // 3. 設定 Td 與 斑馬紋、重點行/格高亮
-        const trs = table.querySelectorAll('tbody tr');
+        const trs = table.querySelectorAll('tbody tr, tr');
         trs.forEach((tr, index) => {
-          const isHighlightRow = tr.classList.contains('highlight-cell');
+          if (tr.parentElement && tr.parentElement.tagName.toLowerCase() === 'thead') return;
+          
+          // 若開關開啟，才判定是否含有 highlight-cell
+          const isHighlightRow = enableHighlight && tr.classList.contains('highlight-cell');
           const defaultBg = index % 2 === 0 ? rowOddBg : rowEvenBg;
 
           const tds = tr.querySelectorAll('td');
           tds.forEach(td => {
-            const isHighlightCell = td.classList.contains('highlight-cell') || isHighlightRow;
+            // 若開關開啟，才判定單一儲存格是否含有 highlight-cell
+            const isHighlightCell = enableHighlight && (td.classList.contains('highlight-cell') || isHighlightRow);
             const bg = isHighlightCell ? highlightBg : defaultBg;
             const textColor = isHighlightCell ? highlightText : bodyText;
 
             td.style.cssText = `padding: 14px 12px; border: 1px solid ${borderColor}; text-align: ${textAlign}; vertical-align: middle; background-color: ${bg}; color: ${textColor};`;
+            
+            td.querySelectorAll('strong, span, b, p, a, div').forEach(child => {
+              child.style.color = 'inherit';
+            });
+
             td.removeAttribute('class');
           });
           tr.removeAttribute('class');
@@ -312,47 +430,53 @@
         `.trim();
 
         // 5. 更新預覽與輸出代碼
-        document.getElementById('previewContainer').innerHTML = finalHtml;
-        document.getElementById('outputCode').textContent = finalHtml;
+        if (previewCont) previewCont.innerHTML = finalHtml;
+        if (outCode) outCode.textContent = finalHtml;
 
       } catch (error) {
-        document.getElementById('previewContainer').innerHTML = '<p class="text-red-500 text-center">解析錯誤，請確認貼上的 HTML 語法</p>';
-        document.getElementById('outputCode').textContent = '';
+        if (previewCont) previewCont.innerHTML = '<p class="text-red-500 text-center">解析錯誤，請確認貼上的 HTML 語法</p>';
+        if (outCode) outCode.textContent = '';
       }
     }
 
     // 複製剪貼簿功能
-    document.getElementById('copyBtn').addEventListener('click', () => {
-      const code = document.getElementById('outputCode').textContent;
-      if (!code) return;
+    const copyB = getEl('copyBtn');
+    if (copyB) {
+      copyB.addEventListener('click', () => {
+        const code = getEl('outputCode')?.textContent;
+        if (!code) return;
 
-      const textArea = document.createElement("textarea");
-      textArea.value = code;
-      document.body.appendChild(textArea);
-      textArea.select();
-      
-      try {
-        document.execCommand('copy');
-        const btnText = document.getElementById('copyBtnText');
-        const btn = document.getElementById('copyBtn');
+        const textArea = document.createElement("textarea");
+        textArea.value = code;
+        document.body.appendChild(textArea);
+        textArea.select();
         
-        btnText.textContent = '已複製防彈代碼！';
-        btn.classList.replace('bg-green-600', 'bg-blue-600');
-        btn.classList.replace('hover:bg-green-500', 'hover:bg-blue-500');
+        try {
+          document.execCommand('copy');
+          const btnText = getEl('copyBtnText');
+          const btn = getEl('copyBtn');
+          
+          if (btnText && btn) {
+            btnText.textContent = '已複製防彈代碼！';
+            btn.classList.replace('bg-green-600', 'bg-blue-600');
+            btn.classList.replace('hover:bg-green-500', 'hover:bg-blue-500');
 
-        setTimeout(() => {
-          btnText.textContent = '一鍵複製防彈代碼';
-          btn.classList.replace('bg-blue-600', 'bg-green-600');
-          btn.classList.replace('hover:bg-blue-500', 'hover:bg-green-500');
-        }, 2000);
-      } catch (err) {
-        console.error('複製失敗：', err);
-      }
-      document.body.removeChild(textArea);
-    });
+            setTimeout(() => {
+              btnText.textContent = '一鍵複製防彈代碼';
+              btn.classList.replace('bg-blue-600', 'bg-green-600');
+              btn.classList.replace('hover:bg-blue-500', 'hover:bg-green-500');
+            }, 2000);
+          }
+        } catch (err) {
+          console.error('複製失敗：', err);
+        }
+        document.body.removeChild(textArea);
+      });
+    }
 
     // 首次執行初始化
     generateTable();
+    console.log("Divi Table Generator (Stable Production Version) Initialized Successfully.");
   </script>
 </body>
 </html>
