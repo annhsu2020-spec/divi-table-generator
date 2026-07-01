@@ -139,7 +139,7 @@
               <div class="flex items-center justify-between mb-3">
                 <label class="text-sm font-semibold text-gray-800 flex items-center gap-2 cursor-pointer select-none">
                   <input type="checkbox" id="enableHighlight" checked class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500 cursor-pointer">
-                  啟用重點區塊 (Highlight) 樣式，需要在貼上原始碼時，在那一行的 <tr> 加上 class="highlight-cell" 即可。
+                  啟用重點區塊 (Highlight) 樣式，需要在貼上原始碼時，在那一行的 &lt;tr&gt; 加上 class="highlight-cell" 即可。
                 </label>
               </div>
               
@@ -385,27 +385,39 @@
           return;
         }
 
-        // 1. 設定 Table 基礎 CSS
+        // 1. 設定 Table 基礎 CSS，並移除寫死的 width (防呆 RWD)
         table.removeAttribute('class');
+        table.removeAttribute('width');
         table.style.cssText = `width: 100%; min-width: 600px; border-collapse: collapse; font-family: inherit; font-size: ${fontSize}; line-height: 1.6;`;
 
-        // 2. 設定 Th 抬頭
-        const ths = table.querySelectorAll('th');
-        ths.forEach(th => {
-          th.style.cssText = `background-color: ${headerBg}; color: ${headerText}; padding: 16px 12px; border: 1px solid ${borderColor}; text-align: center; font-weight: bold; white-space: nowrap;`;
+        // 2. 設定 Th 抬頭 (強效容錯：同時抓取 thead 內的 th 與 td)
+        const headerCells = table.querySelectorAll('thead th, thead td');
+        headerCells.forEach(cell => {
+          cell.removeAttribute('width'); // 移除寫死的 width
+          cell.style.cssText = `background-color: ${headerBg}; color: ${headerText}; padding: 16px 12px; border: 1px solid ${borderColor}; text-align: center; font-weight: bold; white-space: nowrap;`;
+          
+          // 確保內部 tag 繼承顏色，防止 Divi 主題覆寫
+          cell.querySelectorAll('strong, span, b, p, a, div').forEach(child => {
+            child.style.color = 'inherit';
+          });
+          cell.removeAttribute('class');
         });
 
-        // 3. 設定 Td 與 斑馬紋、重點行/格高亮
-        const trs = table.querySelectorAll('tbody tr, tr');
-        trs.forEach((tr, index) => {
-          if (tr.parentElement && tr.parentElement.tagName.toLowerCase() === 'thead') return;
+        // 3. 設定 Td 與 斑馬紋、重點行/格高亮 (過濾掉 thead 裡面的 tr)
+        const bodyTrs = Array.from(table.querySelectorAll('tr')).filter(tr => !tr.closest('thead'));
+        bodyTrs.forEach((tr, index) => {
           
           // 若開關開啟，才判定是否含有 highlight-cell
           const isHighlightRow = enableHighlight && tr.classList.contains('highlight-cell');
           const defaultBg = index % 2 === 0 ? rowOddBg : rowEvenBg;
 
-          const tds = tr.querySelectorAll('td');
+          const tds = tr.querySelectorAll('td, th');
           tds.forEach(td => {
+            // 防護：如果這個儲存格已經被當作 header 處理過，就跳過
+            if (td.closest('thead')) return;
+
+            td.removeAttribute('width'); // 移除寫死的 width
+
             // 若開關開啟，才判定單一儲存格是否含有 highlight-cell
             const isHighlightCell = enableHighlight && (td.classList.contains('highlight-cell') || isHighlightRow);
             const bg = isHighlightCell ? highlightBg : defaultBg;
