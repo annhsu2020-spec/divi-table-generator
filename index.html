@@ -390,8 +390,19 @@
         table.removeAttribute('width');
         table.style.cssText = `width: 100%; min-width: 600px; border-collapse: collapse; font-family: inherit; font-size: ${fontSize}; line-height: 1.6;`;
 
-        // 2. 設定 Th 抬頭 (強效容錯：同時抓取 thead 內的 th 與 td)
-        const headerCells = table.querySelectorAll('thead th, thead td');
+        // 【終極容錯升級：智慧抬頭偵測】判斷是否有 <thead，如果沒有，強制將第一行視為抬頭！
+        let hasThead = table.querySelector('thead') !== null;
+        let headerCells = table.querySelectorAll('thead th, thead td');
+        
+        if (!hasThead) {
+          const firstRow = table.querySelector('tr');
+          if (firstRow) {
+            headerCells = firstRow.querySelectorAll('th, td');
+            firstRow.removeAttribute('style'); // 清除可能寫死的行高
+          }
+        }
+
+        // 2. 設定 Th 抬頭
         headerCells.forEach(cell => {
           cell.removeAttribute('width'); // 移除寫死的 width
           cell.style.cssText = `background-color: ${headerBg}; color: ${headerText}; padding: 16px 12px; border: 1px solid ${borderColor}; text-align: center; font-weight: bold; white-space: nowrap;`;
@@ -404,9 +415,24 @@
         });
 
         // 3. 設定 Td 與 斑馬紋、重點行/格高亮 (過濾掉 thead 裡面的 tr)
-        const bodyTrs = Array.from(table.querySelectorAll('tr')).filter(tr => !tr.closest('thead'));
+        let bodyTrs = Array.from(table.querySelectorAll('tr')).filter(tr => !tr.closest('thead'));
+        
+        // 如果沒有 thead，第一行已經被當成抬頭處理了，所以內容資料必須從第二行開始算
+        if (!hasThead && bodyTrs.length > 0) {
+          bodyTrs.shift(); // 從內容陣列中移除第一行
+        }
+
         bodyTrs.forEach((tr, index) => {
           
+          tr.removeAttribute('style'); // 清除殘留的寫死行高 (如 style="height: 24px;")
+
+          // 【防呆機制】檢查這行是不是空行 (只包含空白或完全沒字)，如果是，直接刪除這行並跳過處理
+          const textContent = tr.textContent.replace(/\s/g, ''); 
+          if (textContent.length === 0) {
+              tr.remove();
+              return;
+          }
+
           // 若開關開啟，才判定是否含有 highlight-cell
           const isHighlightRow = enableHighlight && tr.classList.contains('highlight-cell');
           const defaultBg = index % 2 === 0 ? rowOddBg : rowEvenBg;
@@ -414,7 +440,7 @@
           const tds = tr.querySelectorAll('td, th');
           tds.forEach(td => {
             // 防護：如果這個儲存格已經被當作 header 處理過，就跳過
-            if (td.closest('thead')) return;
+            if (hasThead && td.closest('thead')) return;
 
             td.removeAttribute('width'); // 移除寫死的 width
 
