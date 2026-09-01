@@ -388,7 +388,8 @@
         // 1. 設定 Table 基礎 CSS，並移除寫死的 width (防呆 RWD)
         table.removeAttribute('class');
         table.removeAttribute('width');
-        table.style.cssText = `width: 100%; min-width: 600px; border-collapse: collapse; font-family: inherit; font-size: ${fontSize}; line-height: 1.6;`;
+        // 🚨 終極防護：強制設定 margin: 0 !important 抵擋 Divi 的全域 margin-bottom: 15px;
+        table.style.cssText = `width: 100%; min-width: 600px; border-collapse: collapse; font-family: inherit; font-size: ${fontSize}; line-height: 1.6; margin: 0 !important; border: none !important;`;
 
         // 【終極容錯升級：智慧抬頭偵測】判斷是否有 <thead，如果沒有，強制將第一行視為抬頭！
         let hasThead = table.querySelector('thead') !== null;
